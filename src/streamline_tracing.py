@@ -62,7 +62,7 @@ class TRACE:
             #print(len(r_i))
             #print(idx)
 
-            phi = -np.atan(self.y_plot_break[idx[temp]]/self.z_plot_break[idx[temp]])
+            phi = -np.arctan(self.y_plot_break[idx[temp]]/self.z_plot_break[idx[temp]])
             print(np.degrees(phi))
 
             def event_cr2(theta, S):
@@ -71,7 +71,7 @@ class TRACE:
 
             r_i_s = np.sqrt(self.x_plot_break**2 + (self.z_plot_break)**2 + self.y_plot_break**2)
 
-            theta_i_s = np.atan(np.sqrt((self.z_plot_break)**2 + self.y_plot_break**2)/self.x_plot_break)
+            theta_i_s = np.arctan(np.sqrt((self.z_plot_break)**2 + self.y_plot_break**2)/self.x_plot_break)
 
             #   Conical Shock Solution, Loop Iteration, Data Stored for Euler Integration
             thetas = [np.abs(theta_i_s[idx[temp]]), 1e-08]
@@ -116,7 +116,7 @@ class TRACE:
                             np.cos(phi)*(r_i_s*np.sin(thet_array[i-1])-r_i_s*np.cos(thet_array[i-1])*(r_n*np.sin(thet_array[i])-r_i_s*np.sin(thet_array[i-1]))/(r_n*np.cos(thet_array[i])-r_i_s*np.cos(thet_array[i-1])))
 
                     r_break = np.sqrt((z_itp/np.cos(phi))**2 + L**2)
-                    theta_break = np.atan((z_itp/np.cos(phi))/L)
+                    theta_break = np.arctan((z_itp/np.cos(phi))/L)
 
                     r_march.append(r_break)
                     thet_march.append(theta_break)
