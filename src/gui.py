@@ -4,6 +4,7 @@ import numpy as np
 import subprocess
 import threading
 import os
+import sys
 
 # Function to run the user_input.py script
 def run_script():
@@ -12,10 +13,14 @@ def run_script():
     if os.getcwd() != current_dir:
         os.chdir(current_dir)
     
+    # Create the temp directory if it doesn't exist
+    if not os.path.exists("temp"):
+        os.makedirs("temp")
+    
     with open("user_input.py", "w") as f:
         f.write(f"""
 import numpy as np
-                
+
 #   Basic Flowfield
 M1 = {M1_var.get()}
 gamma = {gamma_var.get()}
@@ -43,21 +48,34 @@ def z(y):
     func = {trailing_edge_function_var.get()}    # Define Your Own Trailing Edge Function
     return func
 """)
+    # Redirect stdout and stderr to the text widget
+    sys.stdout = TextRedirector(output_text, "stdout")
+    sys.stderr = TextRedirector(output_text, "stderr")
+    
     subprocess.run(["python", "user_input.py"])
     subprocess.run(["python", "main.py"])
+    update_image()
 
 # Function to update the image
 def update_image():
-    img = tk.PhotoImage(file="./temp/image.png")
-    image_label.config(image=img)
-    image_label.image = img
+    img_path = "./temp/cone_fig.png"
+    if os.path.exists(img_path):
+        img = tk.PhotoImage(file=img_path)
+        image_label.config(image=img)
+        image_label.image = img
 
-# Function to capture stdout and display in the text widget
-def capture_stdout():
-    process = subprocess.Popen(["python", "main.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    for line in iter(process.stdout.readline, b''):
-        output_text.insert(tk.END, line.decode())
-        output_text.see(tk.END)
+# Class to redirect stdout and stderr to the text widget
+class TextRedirector(object):
+    def __init__(self, widget, tag="stdout"):
+        self.widget = widget
+        self.tag = tag
+
+    def write(self, str):
+        self.widget.insert(tk.END, str, (self.tag,))
+        self.widget.see(tk.END)
+
+    def flush(self):
+        pass
 
 # Create the main window
 root = tk.Tk()

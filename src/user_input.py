@@ -1,6 +1,6 @@
 
 import numpy as np
-                
+
 #   Basic Flowfield
 M1 = 8.0
 gamma = 1.4
