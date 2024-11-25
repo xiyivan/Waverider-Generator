@@ -8,7 +8,7 @@ class Oblique_Shock:
         beta_rad = np.radians(beta)
 
         tan_theta = 2 * (1 / np.tan(beta_rad)) * ((M1**2 * np.sin(beta_rad)**2 - 1) / (M1**2 * (gamma + np.cos(2 * beta_rad)) + 2))
-        theta_rad = np.atan(tan_theta)
+        theta_rad = np.arctan(tan_theta)
         
         Mn1 = M1 * np.sin(beta_rad)
         
