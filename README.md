@@ -1,4 +1,4 @@
-# Waverider-Generator
+# waverider-generator
  Outputs a cone-derived waverider from given basic flowfield informations and user-defined trailing edge. Main modules including solving Taylor-Maccoll equation and streamline tracing to form the lower surface
 
  User can specifies their UDF (User Defined Function) for the TE (Trailing Edge). 
