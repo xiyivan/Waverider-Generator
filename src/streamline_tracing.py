@@ -29,7 +29,8 @@ class TRACE:
         self.Z_p = z_plot
 
         #   Trailing Edge
-        self.X_b = L
+        print(type(L), type(self.X_p))
+        self.X_b = np.array([L]*len(y_plot))
         self.Y_b = y_plot
         self.Z_b = z_plot
 
@@ -201,7 +202,9 @@ class TRACE:
 
         # Plot the Waverider Geometry
         ax.plot(x_smooth, y_smooth, z_smooth, color='r', lw=2, label='Interpolated Lower Surface Curve')
+        print(type(self.X_p), type(self.Y_p), type(self.Z_p))
         ax.plot(self.X_p, self.Y_p, self.Z_p, color = 'k', label='Leading Edge')
+        print(self.X_b, self.Y_b, self.Z_b)
         ax.plot(self.X_b, self.Y_b, self.Z_b, color = 'y', label='Trailing Edge')
 
         # Make the Two Lines Below to Comments if Only Want to Display Waverider Geometry
@@ -220,9 +223,9 @@ class TRACE:
                     idx_up.append(int(i*((len(r_i)-j)/N_up)-1))
 
             x_u = np.linspace(self.x_plot_break[idx_up[temp2]], L, N)
-            y_u = self.y_plot_break[idx_up[temp2]]
-            z_u = self.z_plot_break[idx_up[temp2]]
-
+            y_u = np.full(len(x_u),self.y_plot_break[idx_up[temp2]])
+            z_u = np.full(len(x_u),self.z_plot_break[idx_up[temp2]])
+            print(type(x_u), type(y_u), type(z_u))
             plt.plot(x_u, y_u, z_u, color = 'c')
             plt.plot(x_u, -y_u, z_u, color = 'c')
 

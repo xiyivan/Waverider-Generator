@@ -5,6 +5,7 @@ import subprocess
 import threading
 import os
 import sys
+from PIL import Image, ImageTk
 
 # Function to run the user_input.py script
 def run_script():
@@ -54,15 +55,24 @@ def z(y):
     
     subprocess.run(["python", "user_input.py"])
     subprocess.run(["python", "main.py"])
-    update_image()
+    update_images()
 
-# Function to update the image
-def update_image():
-    img_path = "./temp/cone_fig.png"
-    if os.path.exists(img_path):
-        img = tk.PhotoImage(file=img_path)
-        image_label.config(image=img)
-        image_label.image = img
+# Function to update the images
+def update_images():
+    img1_path = "./temp/cone_fig.png"
+    img2_path = "./temp/3DPlot.png"
+    if os.path.exists(img1_path):
+        img1 = Image.open(img1_path)
+        img1 = img1.resize((img1.width // 2, img1.height // 2), Image.LANCZOS)
+        img1 = ImageTk.PhotoImage(img1)
+        image_label1.config(image=img1)
+        image_label1.image = img1
+    if os.path.exists(img2_path):
+        img2 = Image.open(img2_path)
+        img2 = img2.resize((img2.width // 2, img2.height // 2), Image.LANCZOS)
+        img2 = ImageTk.PhotoImage(img2)
+        image_label2.config(image=img2)
+        image_label2.image = img2
 
 # Class to redirect stdout and stderr to the text widget
 class TextRedirector(object):
@@ -80,6 +90,11 @@ class TextRedirector(object):
 # Create the main window
 root = tk.Tk()
 root.title("GUI Program")
+
+# Set the window size to match the screen size
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+root.geometry(f"{screen_width}x{screen_height}")
 
 # Create the user input frame
 input_frame = ttk.Frame(root)
@@ -133,8 +148,10 @@ ttk.Button(input_frame, text="RUN", command=lambda: threading.Thread(target=run_
 # Create the image display frame
 image_frame = ttk.Frame(root)
 image_frame.grid(row=0, column=1, padx=10, pady=10, sticky="ne")
-image_label = ttk.Label(image_frame)
-image_label.grid(row=0, column=0)
+image_label1 = ttk.Label(image_frame)
+image_label1.grid(row=0, column=0)
+image_label2 = ttk.Label(image_frame)
+image_label2.grid(row=1, column=0)
 
 # Create the output text frame
 output_frame = ttk.Frame(root)
