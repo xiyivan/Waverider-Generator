@@ -48,6 +48,9 @@ c = (np.sqrt(Rs**2 - W2**2) - R1) / W2**4
 def z(y):
     func = {trailing_edge_function_var.get()}    # Define Your Own Trailing Edge Function
     return func
+
+# Output file
+file_output = {output_file_var.get()}
 """)
     # Redirect stdout and stderr to the text widget
     sys.stdout = TextRedirector(output_text, "stdout")
@@ -86,6 +89,21 @@ class TextRedirector(object):
 
     def flush(self):
         pass
+
+# Function to display the output message when the checkbox is selected
+def display_output_message():
+    if output_file_var.get():
+        output_text.insert(tk.END, '''
+        | OUTPUT MODULE
+
+        | Format: .txt file of Key Curve Coordinates for Curve Import in CAD/CAE Software
+        | Unit:   MKS     [Meters,             Kilograms,            Seconds]
+        | Comment out the following line if you don't want any outputs to your device yet
+
+       \  /  CAUTION: Those line will write N_l+N_up+2 number of .txt file to your device
+        \\/
+    ''')
+        output_text.see(tk.END)
 
 # Create the main window
 root = tk.Tk()
@@ -140,7 +158,8 @@ ttk.Entry(input_frame, textvariable=trailing_edge_function_var).grid(row=11, col
 
 # Output file checkbutton
 output_file_var = tk.BooleanVar()
-ttk.Checkbutton(input_frame, text="Output file", variable=output_file_var).grid(row=12, column=0, columnspan=2)
+output_file_checkbutton = ttk.Checkbutton(input_frame, text="Output file", variable=output_file_var, command=display_output_message)
+output_file_checkbutton.grid(row=12, column=0, columnspan=2)
 
 # Run button
 ttk.Button(input_frame, text="RUN", command=lambda: threading.Thread(target=run_script).start()).grid(row=13, column=0, columnspan=2)
@@ -155,7 +174,7 @@ image_label2.grid(row=1, column=0)
 
 # Create the output text frame
 output_frame = ttk.Frame(root)
-output_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="s")
+output_frame.grid(row=1, column=0, columnspan=1, padx=10, pady=10, sticky="nw")
 output_text = tk.Text(output_frame, height=10, width=80)
 output_text.grid(row=0, column=0)
 

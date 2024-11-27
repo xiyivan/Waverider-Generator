@@ -27,3 +27,6 @@ c = (np.sqrt(Rs**2 - W2**2) - R1) / W2**4
 def z(y):
     func = a + b*y**2 + c*y**4    # Define Your Own Trailing Edge Function
     return func
+
+# Output file
+file_output = False

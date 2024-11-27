@@ -71,8 +71,10 @@ class Main:
            \  /  CAUTION: Those line will write N_l+N_up+2 number of .txt file to your device
             \/
         ''' 
-        #self.cae.output_bp(self.a, self.b, self.c, self.Rs, self.L, self.N, self.N_l, self.N_up, Vr_i, V_theta_i)
-        #self.cae.output_lower_surface()
+
+        if UI.file_output:
+            self.cae.output_bp(self.a, self.b, self.c, self.Rs, self.L, self.N, self.N_l, self.N_up, Vr_i, V_theta_i)
+            self.cae.output_lower_surface()
     
 main = Main()
 main.run()
