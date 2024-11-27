@@ -50,7 +50,6 @@ class Main:
         self.TEG.te_plot(self.a, self.b, self.c, self.Rs, self.L, self.N)
         self.TEG.baseplane_visualize(self.L, self.Rs, self.N, self.beta_rad, Vr_i, V_theta_i)
         plt.savefig("temp/cone_fig.png")
-        plt.show()
     
 
         #    LE Forward Projection onto Shock Cone
@@ -59,7 +58,6 @@ class Main:
         #    Streamline Tracing Marching from Shock Surface to Baseplane
         self.trace.tracing_module(self.L, self.N, self.N_l, self.N_up, Vr_i, V_theta_i)
         plt.savefig("temp/3DPlot.png")
-        plt.show()
 
         '''
             | OUTPUT MODULE
